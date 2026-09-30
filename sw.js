@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lilygo-timer-v1';
+const CACHE_NAME = 'chronopulse-v1';
 const ASSETS = [
   './',
   './index.html',
