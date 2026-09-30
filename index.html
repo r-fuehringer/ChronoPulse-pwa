@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LilyGo ESP32 Timer</title>
+  <title>ChronoPulse Timer</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#007bff">
@@ -11,21 +11,36 @@
 <body>
 
   <div class="container">
-    <h2>LilyGo Timer Control</h2>
+    <h2>ChronoPulse Control</h2>
 
-    <!-- Bluetooth Connection Card -->
+    <!-- 1. LilyGo Bluetooth Verbindung -->
     <div class="card">
-      <h3>1. Verbindung zum LilyGo</h3>
+      <h3>1. LilyGo ESP32 Verbindung</h3>
       <button id="connectBtn" onclick="connectESP32()">Mit LilyGo per Bluetooth verbinden</button>
       <p id="connStatus" class="status text-disconnected">Nicht verbunden</p>
     </div>
 
-    <!-- Timer Config Card -->
+    <!-- 2. Garmin Uhr Kopplung -->
     <div class="card">
-      <h3>2. Timer Konfiguration</h3>
+      <h3>2. Garmin Uhr Koppeln</h3>
+      <button id="scanGarminBtn" onclick="scanGarmin()" disabled>Garmin Uhren suchen</button>
+      
+      <select id="garminSelect" style="display:none; margin-top: 10px;">
+        <!-- Dynamisch befüllt -->
+      </select>
+
+      <button id="connectGarminBtn" onclick="connectSelectedGarmin()" style="display:none; background: #28a745; margin-top: 10px;">
+        Gewählte Uhr mit LilyGo verbinden
+      </button>
+      <p id="garminScanStatus" class="status-info"></p>
+    </div>
+
+    <!-- 3. Timer Konfiguration -->
+    <div class="card">
+      <h3>3. Timer Konfiguration</h3>
       
       <label for="modeSelect">Modus Wählen:</label>
-      <select id="modeSelect" onchange="toggleFields()">
+      <select id="modeSelect" onchange="toggleFields()" disabled>
         <option value="COUNT_UP">1. Up-Timer (hh:mm:ss)</option>
         <option value="METCON">2. METCON (Countdown)</option>
         <option value="INTERVAL">3. Intervall</option>
@@ -51,11 +66,10 @@
 
   <script src="app.js"></script>
   <script>
-    // Service Worker für Offline/PWA Funktionalität registrieren
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js')
         .then(() => console.log("Service Worker registriert"))
-        .catch(err => console.error("SW Fehler:", err));
+        .catch(err => console.error("Service Worker Fehler:", err));
     }
   </script>
 </body>
