@@ -1,0 +1,20 @@
+{
+  "short_name": "LilyGo Timer",
+  "name": "LilyGo ESP32 Workout Timer",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192/007bff/ffffff?text=Timer",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://via.placeholder.com/512/007bff/ffffff?text=Timer",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#121212",
+  "theme_color": "#007bff",
+  "display": "standalone"
+}
