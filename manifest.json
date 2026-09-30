@@ -1,14 +1,14 @@
 {
-  "short_name": "LilyGo Timer",
-  "name": "LilyGo ESP32 Workout Timer",
+  "short_name": "ChronoPulse",
+  "name": "ChronoPulse Workout Timer",
   "icons": [
     {
-      "src": "https://via.placeholder.com/192/007bff/ffffff?text=Timer",
+      "src": "https://via.placeholder.com/192/007bff/ffffff?text=Pulse",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "https://via.placeholder.com/512/007bff/ffffff?text=Timer",
+      "src": "https://via.placeholder.com/512/007bff/ffffff?text=Pulse",
       "type": "image/png",
       "sizes": "512x512"
     }
