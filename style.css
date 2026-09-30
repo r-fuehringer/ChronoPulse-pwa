@@ -1,74 +1,76 @@
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: #121212;
-  color: #ffffff;
-  margin: 0;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-}
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChronoPulse Timer</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#007bff">
+</head>
+<body>
 
-.container {
-  width: 100%;
-  max-width: 480px;
-}
+  <div class="container">
+    <h2>ChronoPulse Control</h2>
 
-h2, h3 {
-  margin-top: 0;
-}
+    <!-- 1. LilyGo Bluetooth Verbindung -->
+    <div class="card">
+      <h3>1. LilyGo ESP32 Verbindung</h3>
+      <button id="connectBtn" onclick="connectESP32()">Mit LilyGo per Bluetooth verbinden</button>
+      <p id="connStatus" class="status text-disconnected">Nicht verbunden</p>
+    </div>
 
-.card {
-  background-color: #1e1e1e;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
+    <!-- 2. Garmin Uhr Kopplung -->
+    <div class="card">
+      <h3>2. Garmin Uhr Koppeln</h3>
+      <button id="scanGarminBtn" onclick="scanGarmin()" disabled>Garmin Uhren suchen</button>
+      
+      <select id="garminSelect" style="display:none; margin-top: 10px;">
+        <!-- Dynamisch befüllt -->
+      </select>
 
-label {
-  display: block;
-  margin-top: 10px;
-  font-size: 14px;
-  color: #ccc;
-}
+      <button id="connectGarminBtn" onclick="connectSelectedGarmin()" style="display:none; background: #28a745; margin-top: 10px;">
+        Gewählte Uhr mit LilyGo verbinden
+      </button>
+      <p id="garminScanStatus" class="status-info"></p>
+    </div>
 
-input, select {
-  width: 100%;
-  padding: 12px;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-  background-color: #2a2a2a;
-  color: white;
-  border: 1px solid #444;
-  border-radius: 6px;
-  font-size: 16px;
-}
+    <!-- 3. Timer Konfiguration -->
+    <div class="card">
+      <h3>3. Timer Konfiguration</h3>
+      
+      <label for="modeSelect">Modus Wählen:</label>
+      <select id="modeSelect" onchange="toggleFields()" disabled>
+        <option value="COUNT_UP">1. Up-Timer (hh:mm:ss)</option>
+        <option value="METCON">2. METCON (Countdown)</option>
+        <option value="INTERVAL">3. Intervall</option>
+      </select>
 
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 14px;
-  width: 100%;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 10px;
-}
+      <div id="metconFields" style="display:none;">
+        <label for="metconDuration">Dauer (Sekunden):</label>
+        <input type="number" id="metconDuration" value="600">
+      </div>
 
-button:disabled {
-  background-color: #444;
-  color: #888;
-  cursor: not-allowed;
-}
+      <div id="intervalFields" style="display:none;">
+        <label for="workTime">Belastung (Sekunden):</label>
+        <input type="number" id="workTime" value="40">
+        <label for="restTime">Pause (Sekunden):</label>
+        <input type="number" id="restTime" value="20">
+        <label for="rounds">Runden:</label>
+        <input type="number" id="rounds" value="8">
+      </div>
 
-.status {
-  margin-top: 10px;
-  font-size: 14px;
-  font-weight: bold;
-}
+      <button id="sendBtn" onclick="sendConfig()" disabled>Send Timer Config</button>
+    </div>
+  </div>
 
-.text-connected { color: #28a745; }
-.text-disconnected { color: #dc3545; }
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log("Service Worker registriert"))
+        .catch(err => console.error("Service Worker Fehler:", err));
+    }
+  </script>
+</body>
+</html>
